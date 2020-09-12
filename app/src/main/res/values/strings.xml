@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather Novacic</string>
+    <string name="network_unavailable">Oh no! Internet connection lost. Please check your connectivity and try again.</string>
 </resources>

@@ -5,14 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import com.tomislav.novacic.weathernovacic.base.BaseActivity
 
-class WeatherActivity : BaseActivity() {
+class NetworkUnavailableActivity : BaseActivity() {
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, WeatherActivity::class.java)
+        fun newInstance(context: Context) = Intent(context, NetworkUnavailableActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_weather)
+        setContentView(R.layout.activity_network_unavailable)
     }
 }
