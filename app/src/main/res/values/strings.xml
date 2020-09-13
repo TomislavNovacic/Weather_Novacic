@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Weather Novacic</string>
     <string name="network_unavailable">Oh no! Internet connection lost. Please check your connectivity and try again.</string>
+    <string name="location_permission_dialog_title">Location permission needed</string>
+    <string name="location_permission_dialog_msg">Location permission is mandatory in order to use this app.</string>
+    <string name="location_permission_dialog_yes_btn">Enable permission</string>
+    <string name="location_permission_dialog_no_btn">Exit</string>
+    <string name="location_settings_dialog_title">Please enable Locations</string>
+    <string name="location_settings_dialog_msg">We can\'t get your current location unless you enable Locations in Settings.</string>
+    <string name="dialog_confirm_btn">Confirm</string>
 </resources>
