@@ -17,6 +17,7 @@ import com.tomislav.novacic.weathernovacic.base.BaseActivity
 import com.tomislav.novacic.weathernovacic.utils.DialogHelper
 import com.tomislav.novacic.weathernovacic.utils.PermissionHelper
 import kotlinx.android.synthetic.main.activity_weather.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 
@@ -24,6 +25,7 @@ class WeatherActivity : BaseActivity() {
 
     private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
     private var locationRequest: LocationRequest? = null
+    private val viewModel: WeatherViewModel by viewModel()
 
     companion object {
         private const val LOCATION_PERMISSION_REQ_CODE = 1
