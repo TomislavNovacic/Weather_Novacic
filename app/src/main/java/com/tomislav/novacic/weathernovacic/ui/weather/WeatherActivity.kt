@@ -17,7 +17,9 @@ import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.tomislav.novacic.weathernovacic.BuildConfig.API_KEY
+import com.tomislav.novacic.weathernovacic.BuildConfig.YOUTUBE_API_KEY
 import com.tomislav.novacic.weathernovacic.R
 import com.tomislav.novacic.weathernovacic.base.BaseActivity
 import com.tomislav.novacic.weathernovacic.data.WeatherAdapter
@@ -48,10 +50,14 @@ class WeatherActivity : BaseActivity() {
     private lateinit var firstDayAdapter: WeatherAdapter
     private lateinit var secondDayAdapter: WeatherAdapter
     private lateinit var thirdDayAdapter: WeatherAdapter
+    private lateinit var cityName: String
 
     companion object {
         private const val LOCATION_PERMISSION_REQ_CODE = 1
         private const val CHECK_ARE_LOCATIONS_ENABLED_REQ_CODE = 2
+        private const val startTimeMillis = 0
+        private const val autoPlay = true
+        private const val lightBoxMode = false
 
         fun newInstance(context: Context) = Intent(context, WeatherActivity::class.java)
     }
@@ -91,7 +97,16 @@ class WeatherActivity : BaseActivity() {
             if (it != null) {
                 title = "${it.city.name}, ${it.city.country}"
                 updateDailyForecasts(it)
+                cityName = it.city.name
+                play.visibility = View.VISIBLE
             }
+        }
+        viewModel.videoId.observe(this) {
+            val intent = YouTubeStandalonePlayer.createVideoIntent(this, YOUTUBE_API_KEY, it, startTimeMillis, autoPlay, lightBoxMode)
+            startActivity(intent)
+        }
+        play.setOnClickListener {
+            viewModel.getVideoId(YOUTUBE_API_KEY, cityName, 1, "video")
         }
         initLayout()
     }

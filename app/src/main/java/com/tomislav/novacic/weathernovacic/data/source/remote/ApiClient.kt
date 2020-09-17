@@ -2,6 +2,7 @@ package com.tomislav.novacic.weathernovacic.data.source.remote
 
 import com.tomislav.novacic.weathernovacic.data.model.CurrentWeather
 import com.tomislav.novacic.weathernovacic.data.model.DailyForecast
+import com.tomislav.novacic.weathernovacic.data.model.YoutubeResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -36,4 +37,12 @@ interface ApiClient {
         @Query("units") units: String,
         @Query("appid") appid: String
     ): DailyForecast
+
+    @GET("youtube/v3/search")
+    fun getVideoId(
+        @Query("key") apiKey: String,
+        @Query("q") query: String,
+        @Query("maxResults") maxResults: Int,
+        @Query("type") type: String
+    ): YoutubeResponse
 }

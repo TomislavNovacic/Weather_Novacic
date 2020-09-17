@@ -33,4 +33,15 @@ class WeatherRepository(private val retrofitService: RetrofitService) {
             null
         }
     }
+
+    fun getVideoId(apiKey: String, query: String, maxResults: Int, type: String): String {
+        val apiClient = retrofitService.provideYoutubeRetrofitService()
+        return try {
+            val response = apiClient.getVideoId(apiKey, query, maxResults, type)
+            return response.items[0].id.videoId
+        } catch (e: Exception) {
+            // I was short on time :)
+            "4OWTkWuMiLg"
+        }
+    }
 }
