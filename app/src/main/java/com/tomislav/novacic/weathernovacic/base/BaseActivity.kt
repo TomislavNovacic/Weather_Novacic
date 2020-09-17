@@ -1,8 +1,8 @@
 package com.tomislav.novacic.weathernovacic.base
 
 import androidx.appcompat.app.AppCompatActivity
-import com.tomislav.novacic.weathernovacic.NetworkUnavailableActivity
-import com.tomislav.novacic.weathernovacic.WeatherActivity
+import com.tomislav.novacic.weathernovacic.ui.networkUnavailable.NetworkUnavailableActivity
+import com.tomislav.novacic.weathernovacic.ui.weather.WeatherActivity
 import com.tomislav.novacic.weathernovacic.connectivity.ConnectivityStateProvider
 import com.tomislav.novacic.weathernovacic.connectivity.ConnectivityStateProvider.NetworkState
 import com.tomislav.novacic.weathernovacic.connectivity.NetworkStateUtil

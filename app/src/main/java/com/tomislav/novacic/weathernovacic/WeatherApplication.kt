@@ -1,6 +1,7 @@
 package com.tomislav.novacic.weathernovacic
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.tomislav.novacic.weathernovacic.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -13,5 +14,6 @@ class WeatherApplication : Application() {
             androidContext(this@WeatherApplication)
             modules(appModule)
         }
+        AndroidThreeTen.init(this)
     }
 }
