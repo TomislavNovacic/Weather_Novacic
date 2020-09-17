@@ -2,6 +2,7 @@ package com.tomislav.novacic.weathernovacic.ui.weather
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -9,7 +10,9 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.view.Menu
 import android.view.View
+import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.ResolvableApiException
@@ -78,13 +81,40 @@ class WeatherActivity : BaseActivity() {
             }
         }
         viewModel.currentWeather.observe(this) {
-            populateLayout(it)
+            if (it != null) {
+                populateLayout(it)
+            } else {
+                DialogHelper().showConfirmDialog(this, getString(R.string.search_error_title), getString(R.string.search_error_msg), null)
+            }
         }
         viewModel.dailyForecast.observe(this) {
-            title = "${it.city.name}, ${it.city.country}"
-            updateDailyForecasts(it)
+            if (it != null) {
+                title = "${it.city.name}, ${it.city.country}"
+                updateDailyForecasts(it)
+            }
         }
         initLayout()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (Intent.ACTION_SEARCH == intent.action) {
+            findViewById<SearchView>(R.id.search).onActionViewCollapsed()
+            val cityName = intent.getStringExtra(SearchManager.QUERY)
+            if (cityName != null) {
+                viewModel.getCurrentWeatherByName(cityName, getString(R.string.units_metric), API_KEY)
+                viewModel.getDailyForecastByName(cityName, getString(R.string.units_metric), API_KEY)
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+        return true
     }
 
     private fun updateDailyForecasts(it: DailyForecast) {

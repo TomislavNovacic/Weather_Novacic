@@ -15,10 +15,24 @@ interface ApiClient {
         @Query("appid") appid: String
     ): CurrentWeather
 
+    @GET("2.5/weather")
+    suspend fun getCurrentWeatherByName(
+        @Query("q") cityName: String,
+        @Query("units") units: String,
+        @Query("appid") appid: String
+    ): CurrentWeather
+
     @GET("2.5/forecast")
     suspend fun getDailyForecast(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
+        @Query("units") units: String,
+        @Query("appid") appid: String
+    ): DailyForecast
+
+    @GET("2.5/forecast")
+    suspend fun getDailyForecastByName(
+        @Query("q") cityName: String,
         @Query("units") units: String,
         @Query("appid") appid: String
     ): DailyForecast

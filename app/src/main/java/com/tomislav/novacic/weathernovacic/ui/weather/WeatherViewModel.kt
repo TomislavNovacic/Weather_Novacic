@@ -16,11 +16,11 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
     private val _dailyForecastLoading = MutableLiveData<Boolean>()
     val dailyForecastLoading: LiveData<Boolean> = _dailyForecastLoading
 
-    private val _currentWeather = MutableLiveData<CurrentWeather>()
-    val currentWeather: LiveData<CurrentWeather> = _currentWeather
+    private val _currentWeather = MutableLiveData<CurrentWeather?>()
+    val currentWeather: LiveData<CurrentWeather?> = _currentWeather
 
-    private val _dailyForecast = MutableLiveData<DailyForecast>()
-    val dailyForecast: LiveData<DailyForecast> = _dailyForecast
+    private val _dailyForecast = MutableLiveData<DailyForecast?>()
+    val dailyForecast: LiveData<DailyForecast?> = _dailyForecast
 
     init {
         _currentWeatherLoading.postValue(false)
@@ -36,10 +36,28 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
         }
     }
 
+    fun getCurrentWeatherByName(cityName: String, units: String, apiKey: String) {
+        _currentWeatherLoading.postValue(true)
+        viewModelScope.launch {
+            val response = repo.getCurrentWeatherByName(cityName, units, apiKey)
+            _currentWeather.postValue(response)
+            _currentWeatherLoading.postValue(false)
+        }
+    }
+
     fun getDailyForecast(lat: Double, lon: Double, units: String, apiKey: String) {
         _dailyForecastLoading.postValue(true)
         viewModelScope.launch {
             val response = repo.getDailyForecast(lat, lon, units, apiKey)
+            _dailyForecast.postValue(response)
+            _dailyForecastLoading.postValue(false)
+        }
+    }
+
+    fun getDailyForecastByName(cityName: String, units: String, apiKey: String) {
+        _dailyForecastLoading.postValue(true)
+        viewModelScope.launch {
+            val response = repo.getDailyForecastByName(cityName, units, apiKey)
             _dailyForecast.postValue(response)
             _dailyForecastLoading.postValue(false)
         }
