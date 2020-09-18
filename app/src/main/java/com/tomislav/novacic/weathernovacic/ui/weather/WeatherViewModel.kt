@@ -26,8 +26,8 @@ class WeatherViewModel(private val repo: WeatherRepository) : ViewModel() {
     private val _dailyForecast = MutableLiveData<DailyForecast?>()
     val dailyForecast: LiveData<DailyForecast?> = _dailyForecast
 
-    private val _videoId = MutableLiveData<String>()
-    val videoId: LiveData<String> = _videoId
+    private val _videoId = MutableLiveData<String?>()
+    val videoId: LiveData<String?> = _videoId
 
     init {
         _currentWeatherLoading.postValue(false)

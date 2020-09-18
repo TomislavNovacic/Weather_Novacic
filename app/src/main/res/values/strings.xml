@@ -18,4 +18,6 @@
     <string name="search_hint">Search cities…</string>
     <string name="search_error_title">Error</string>
     <string name="search_error_msg">City not found!</string>
+    <string name="video_id_error_title">Error</string>
+    <string name="video_id_error_msg">Something went wrong!</string>
 </resources>

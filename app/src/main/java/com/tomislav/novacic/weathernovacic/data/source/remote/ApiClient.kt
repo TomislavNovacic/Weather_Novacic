@@ -39,7 +39,7 @@ interface ApiClient {
     ): DailyForecast
 
     @GET("youtube/v3/search")
-    fun getVideoId(
+    suspend fun getVideoId(
         @Query("key") apiKey: String,
         @Query("q") query: String,
         @Query("maxResults") maxResults: Int,

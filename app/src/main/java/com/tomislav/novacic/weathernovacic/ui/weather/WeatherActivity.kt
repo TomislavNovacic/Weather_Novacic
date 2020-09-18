@@ -104,8 +104,12 @@ class WeatherActivity : BaseActivity() {
             }
         }
         viewModel.videoId.observe(this) {
-            val intent = YouTubeStandalonePlayer.createVideoIntent(this, YOUTUBE_API_KEY, it, YOUTUBE_START_TIME_MILLIS, YOUTUBE_AUTOPLAY, YOUTUBE_LIGHT_BOX_MODE)
-            startActivity(intent)
+            if (it != null) {
+                val intent = YouTubeStandalonePlayer.createVideoIntent(this, YOUTUBE_API_KEY, it, YOUTUBE_START_TIME_MILLIS, YOUTUBE_AUTOPLAY, YOUTUBE_LIGHT_BOX_MODE)
+                startActivity(intent)
+            } else {
+                DialogHelper().showConfirmDialog(this, getString(R.string.video_id_error_title), getString(R.string.video_id_error_msg), null)
+            }
         }
         play.setOnClickListener {
             viewModel.getVideoId(YOUTUBE_API_KEY, searchQuery, YOUTUBE_MAX_SEARCH_RESULTS, YOUTUBE_SEARCH_TYPE)
