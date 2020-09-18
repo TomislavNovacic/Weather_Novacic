@@ -50,14 +50,16 @@ class WeatherActivity : BaseActivity() {
     private lateinit var firstDayAdapter: WeatherAdapter
     private lateinit var secondDayAdapter: WeatherAdapter
     private lateinit var thirdDayAdapter: WeatherAdapter
-    private lateinit var cityName: String
+    private lateinit var searchQuery: String
 
     companion object {
         private const val LOCATION_PERMISSION_REQ_CODE = 1
         private const val CHECK_ARE_LOCATIONS_ENABLED_REQ_CODE = 2
-        private const val startTimeMillis = 0
-        private const val autoPlay = true
-        private const val lightBoxMode = false
+        private const val YOUTUBE_START_TIME_MILLIS = 0
+        private const val YOUTUBE_AUTOPLAY = true
+        private const val YOUTUBE_LIGHT_BOX_MODE = false
+        private const val YOUTUBE_MAX_SEARCH_RESULTS = 1
+        private const val YOUTUBE_SEARCH_TYPE = "video"
 
         fun newInstance(context: Context) = Intent(context, WeatherActivity::class.java)
     }
@@ -89,6 +91,8 @@ class WeatherActivity : BaseActivity() {
         viewModel.currentWeather.observe(this) {
             if (it != null) {
                 populateLayout(it)
+                searchQuery = "${it.name} ${it.weather[0].description}"
+                play.visibility = View.VISIBLE
             } else {
                 DialogHelper().showConfirmDialog(this, getString(R.string.search_error_title), getString(R.string.search_error_msg), null)
             }
@@ -97,16 +101,14 @@ class WeatherActivity : BaseActivity() {
             if (it != null) {
                 title = "${it.city.name}, ${it.city.country}"
                 updateDailyForecasts(it)
-                cityName = it.city.name
-                play.visibility = View.VISIBLE
             }
         }
         viewModel.videoId.observe(this) {
-            val intent = YouTubeStandalonePlayer.createVideoIntent(this, YOUTUBE_API_KEY, it, startTimeMillis, autoPlay, lightBoxMode)
+            val intent = YouTubeStandalonePlayer.createVideoIntent(this, YOUTUBE_API_KEY, it, YOUTUBE_START_TIME_MILLIS, YOUTUBE_AUTOPLAY, YOUTUBE_LIGHT_BOX_MODE)
             startActivity(intent)
         }
         play.setOnClickListener {
-            viewModel.getVideoId(YOUTUBE_API_KEY, cityName, 1, "video")
+            viewModel.getVideoId(YOUTUBE_API_KEY, searchQuery, YOUTUBE_MAX_SEARCH_RESULTS, YOUTUBE_SEARCH_TYPE)
         }
         initLayout()
     }
