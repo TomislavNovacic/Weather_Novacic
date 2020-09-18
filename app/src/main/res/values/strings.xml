@@ -8,4 +8,14 @@
     <string name="location_settings_dialog_title">Please enable Locations</string>
     <string name="location_settings_dialog_msg">We can\'t get your current location unless you enable Locations in Settings.</string>
     <string name="dialog_confirm_btn">Confirm</string>
+    <string name="units_metric">metric</string>
+    <string name="weather_icon_url">"https://openweathermap.org/img/w/"%1$s".png"</string>
+    <string name="max_temp">Max: %1$s</string>
+    <string name="min_temp">Min: %1$s</string>
+    <string name="wind_speed">Wind speed: %1$s km/h</string>
+    <string name="today">Today</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search cities…</string>
+    <string name="search_error_title">Error</string>
+    <string name="search_error_msg">City not found!</string>
 </resources>

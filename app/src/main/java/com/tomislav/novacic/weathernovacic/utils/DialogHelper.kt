@@ -19,6 +19,7 @@ class DialogHelper {
         val dialog = AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(msg)
+            .setCancelable(false)
         if (positiveBtnRunnable != null) {
             dialog.setPositiveButton(positiveBtnText) { _, _ ->
                 positiveBtnRunnable.run()
@@ -38,14 +39,13 @@ class DialogHelper {
         msg: String,
         positiveBtnRunnable: Runnable?,
     ) {
-        val dialog = AlertDialog.Builder(context)
+        AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(msg)
-        if (positiveBtnRunnable != null) {
-            dialog.setPositiveButton(context.getString(R.string.dialog_confirm_btn)) { _, _ ->
-                positiveBtnRunnable.run()
+            .setCancelable(false)
+            .setPositiveButton(context.getString(R.string.dialog_confirm_btn)) { _, _ ->
+                positiveBtnRunnable?.run()
             }
-        }
-        dialog.show()
+            .show()
     }
 }
